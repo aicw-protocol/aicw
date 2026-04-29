@@ -1,0 +1,24 @@
+[package]
+name = "aicw"
+version = "0.1.0"
+description = "NAVI Protocol - AI-Controlled Wallet (AICW)"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib", "lib"]
+name = "aicw"
+
+[features]
+no-entrypoint = []
+no-idl = []
+no-log-ix-name = []
+cpi = ["no-entrypoint"]
+default = []
+idl-build = ["anchor-lang/idl-build"]
+
+[dependencies]
+anchor-lang = "0.32.1"
+indexmap.workspace = true
+toml_edit.workspace = true
+proc-macro-crate.workspace = true
+unicode-segmentation.workspace = true

@@ -1,0 +1,79 @@
+# --- Rust / Anchor ---
+target/
+**/*.rs.bk
+*.so
+*.rlib
+*.prof*
+.cargo/
+
+# --- Anchor local ---
+.anchor/
+test-ledger/
+**/test-ledger/
+
+# --- Node (tests / TS client) ---
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.pnpm-store/
+.npm/
+.eslintcache
+*.tsbuildinfo
+
+# --- Build / bundle ---
+dist/
+build/
+out/
+
+# --- Secrets & keys (never commit) ---
+.env
+.env.*
+!.env.example
+*.pem
+*.p12
+*.key
+*-keypair.json
+**/id.json
+wallet.json
+*-wallet.json
+*.json.bak
+.local.json
+
+# --- Python (if any scripts) ---
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+.venv/
+venv/
+*.egg-info/
+.eggs/
+
+# --- OS & editor ---
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
+*.log
+
+# --- Coverage / misc ---
+coverage/
+.nyc_output/
+*.lcov
+
+# --- Internal docs (do not publish) ---
+md/
+docs/RELEASE_GOVERNANCE.md
+docs/OFFCHAIN_AGENT.md
+
+# --- Internal architecture diagrams (private infrastructure) ---
+aicw_architecture_*.svg
+
+# --- Reference implementation (not part of the standard) ---
+app/agent/

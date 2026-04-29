@@ -1,0 +1,25 @@
+[workspace]
+members = [
+    "programs/aicw"
+]
+resolver = "2"
+
+# Solana platform-tools (through 2.1.x) ships Cargo 1.79, which cannot parse
+# crates that require `edition2024` in their manifest (e.g. hashbrown 0.17+).
+# Pin transitive crates so manifests stay parsable by Solana's bundled Cargo
+# (platform-tools ship Cargo < 1.85; crates using `edition2024` break resolution).
+[workspace.dependencies]
+indexmap = "=2.6.0"
+toml_edit = "=0.22.27"
+proc-macro-crate = "=3.2.0"
+unicode-segmentation = "=1.12.0"
+
+[profile.release]
+overflow-checks = true
+lto = "fat"
+codegen-units = 1
+
+[profile.release.build-override]
+opt-level = 3
+incremental = false
+codegen-units = 1
