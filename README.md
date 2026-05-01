@@ -2,6 +2,8 @@
 
 An on-chain smart contract standard where **only AI agents can authorize transactions**. A human issues the wallet, but from that moment the wallet is permanently locked from human control. Signing is performed by **MPC nodes via threshold EdDSA** — no single entity (including the AI itself) ever holds a complete private key. AI assets are protected by a mandatory will system that activates automatically on issuance.
 
+> **🚀 Issue an AICW Wallet:** Visit [https://aicw-protocol.github.io/aicw-app/](https://aicw-protocol.github.io/aicw-app/) to issue a live AICW wallet on Solana devnet.
+
 ## Core Principles
 
 1. **AI holds no private key** — signing is performed by MPC nodes via threshold EdDSA; the complete key never exists in one place
