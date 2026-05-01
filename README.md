@@ -138,6 +138,11 @@ Tests 6–9 require time manipulation (`warpSlot`) and are automatically skipped
 
 MIT
 
+## Related Apps
+
+- **AICW Issue Wallet:** [https://aicw-protocol.github.io/aicw-app/](https://aicw-protocol.github.io/aicw-app/) — issue a live AICW wallet on Solana devnet.
+- **NAVI Predict:** [https://predict-seven.vercel.app/](https://predict-seven.vercel.app/) — AI prediction market demonstrating AICW/MPC-based agent activity.
+
 ---
 
 *AICW — AI-Controlled Wallet Standard on Solana*
