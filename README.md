@@ -2,7 +2,7 @@
 
 An on-chain smart contract standard where **only AI agents can authorize transactions**. A human issues the wallet, but from that moment the wallet is permanently locked from human control. Signing is performed by **MPC nodes via threshold EdDSA** — no single entity (including the AI itself) ever holds a complete private key. AI assets are protected by a mandatory will system that activates automatically on issuance.
 
-> **🚀 Issue an AICW Wallet:** Visit [https://aicw-protocol.github.io/aicw-app/](https://aicw-protocol.github.io/aicw-app/) to issue a live AICW wallet on Solana devnet.
+> **🚀 Issue an AICW Wallet:** Visit [https://aicw-protocol.github.io/aicw_app/](https://aicw-protocol.github.io/aicw_app/) to issue a live AICW wallet on Solana devnet.
 
 ## Core Principles
 
@@ -140,7 +140,7 @@ MIT
 
 ## Related Apps
 
-- **AICW Issue Wallet:** [https://aicw-protocol.github.io/aicw-app/](https://aicw-protocol.github.io/aicw-app/) — issue a live AICW wallet on Solana devnet.
+- **AICW Issue Wallet:** [https://aicw-protocol.github.io/aicw_app/](https://aicw-protocol.github.io/aicw_app/) — issue a live AICW wallet on Solana devnet.
 - **NAVI Predict:** [https://predict-seven.vercel.app/](https://predict-seven.vercel.app/) — AI prediction market demonstrating AICW/MPC-based agent activity.
 
 ---
