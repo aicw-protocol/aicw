@@ -19,7 +19,7 @@ describe("AICW Tests", () => {
     crypto.createHash("sha256").update("claude-sonnet-4-20250514").digest()
   );
   const modelName = "claude-sonnet-4-20250514";
-  const DEATH_TIMEOUT_SECONDS = 30 * 24 * 60 * 60;
+  const DEATH_TIMEOUT_SECONDS = 600; // matches AIWill::DEATH_TIMEOUT_SECONDS (devnet)
 
   const beneficiaryA = Keypair.generate();
   const beneficiaryB = Keypair.generate();
@@ -203,7 +203,7 @@ describe("AICW Tests", () => {
     }
   });
 
-  it("1c-2. create_will rejects death_timeout below 30 days", async () => {
+  it("1c-2. create_will rejects death_timeout below minimum", async () => {
     try {
       await program.methods
         .createWill(
@@ -217,7 +217,7 @@ describe("AICW Tests", () => {
         })
         .signers([aiAgentKeypair])
         .rpc();
-      assert.fail("death_timeout below 30 days must fail");
+      assert.fail("death_timeout below minimum must fail");
     } catch (e: any) {
       assert.include(e.toString(), "InvalidWillParameters");
     }
