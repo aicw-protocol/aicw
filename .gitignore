@@ -77,3 +77,4 @@ aicw_architecture_*.svg
 
 # --- Reference implementation (not part of the standard) ---
 app/agent/
+AICW_Roadmap.md
