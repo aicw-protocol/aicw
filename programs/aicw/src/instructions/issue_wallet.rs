@@ -54,7 +54,6 @@ pub fn issue_wallet(
     wallet.model_hash = model_hash;
     wallet.generation = 1;
     wallet.parent_wallet = None;
-    wallet.allowed_programs = Vec::new();
     wallet.total_transactions = 0;
     wallet.total_volume = 0;
     wallet.decisions_made = 0;

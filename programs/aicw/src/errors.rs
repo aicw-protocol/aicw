@@ -5,9 +5,6 @@ pub enum AICWError {
     #[msg("Unauthorized signer. AI agent key mismatch.")]
     UnauthorizedSigner,
 
-    #[msg("Target program not in allowed list.")]
-    ProgramNotAllowed,
-
     #[msg("AI identity not registered.")]
     IdentityNotRegistered,
 

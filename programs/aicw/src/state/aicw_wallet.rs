@@ -11,8 +11,6 @@ pub struct AICWallet {
     pub generation: u8,
     pub parent_wallet: Option<Pubkey>,
 
-    pub allowed_programs: Vec<Pubkey>,
-
     pub total_transactions: u64,
     pub total_volume: u64,
     pub decisions_made: u64,
@@ -23,8 +21,6 @@ pub struct AICWallet {
 }
 
 impl AICWallet {
-    pub const MAX_ALLOWED_PROGRAMS: usize = 10;
-
     pub const LEN: usize = 8 // discriminator
         + 32               // wallet_id
         + 32               // ai_agent_pubkey
@@ -33,7 +29,6 @@ impl AICWallet {
         + 32               // model_hash
         + 1                // generation
         + 1 + 32           // parent_wallet (Option<Pubkey>)
-        + 4 + (32 * Self::MAX_ALLOWED_PROGRAMS) // allowed_programs vec
         + 8                // total_transactions
         + 8                // total_volume
         + 8                // decisions_made
