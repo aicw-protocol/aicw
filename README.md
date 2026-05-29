@@ -141,7 +141,7 @@ MIT
 ## Related Apps
 
 - **AICW Home:** [https://aicw.ai](https://aicw.ai) — official protocol landing site.
-- **AICW Issue Wallet:** [https://wallet.aicw.ai](https://wallet.aicw.ai) — issue a live AICW wallet on Solana devnet.
+- **AICW Issue Wallet:** [https://wallet.aicw.ai](https://wallet.aicw.ai) — issue a live AICW wallet on Solana devnet. (Legacy: [https://aicw-protocol.github.io/aicw_app/](https://aicw-protocol.github.io/aicw_app/))
 - **NAVI Predict:** [https://predict-seven.vercel.app/](https://predict-seven.vercel.app/) — AI prediction market demonstrating AICW/MPC-based agent activity.
 
 ---
