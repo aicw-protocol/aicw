@@ -1,5 +1,6 @@
 # --- Rust / Anchor ---
 target/
+!target/idl/
 **/*.rs.bk
 *.so
 *.rlib

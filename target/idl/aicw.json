@@ -1,0 +1,1391 @@
+{
+  "address": "9RUEw4jcMi8xcGf3tJRCAdzUzLuhEurts8Z2QQLsRbaV",
+  "metadata": {
+    "name": "aicw",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "NAVI Protocol - AI-Controlled Wallet (AICW)"
+  },
+  "instructions": [
+    {
+      "name": "ai_reject",
+      "docs": [
+        "AI-only: reject a transfer request and log the reasoning on-chain.",
+        "Same liveness requirements as `ai_transfer`."
+      ],
+      "discriminator": [
+        222,
+        233,
+        33,
+        117,
+        39,
+        37,
+        132,
+        251
+      ],
+      "accounts": [
+        {
+          "name": "aicw_wallet",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  105,
+                  99,
+                  119
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "aicw_wallet.ai_agent_pubkey",
+                "account": "AICWallet"
+              }
+            ]
+          }
+        },
+        {
+          "name": "ai_will",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  119,
+                  105,
+                  108,
+                  108
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "aicw_wallet"
+              }
+            ]
+          }
+        },
+        {
+          "name": "ai_signer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "decision_log",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  100,
+                  101,
+                  99,
+                  105,
+                  115,
+                  105,
+                  111,
+                  110
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "aicw_wallet"
+              },
+              {
+                "kind": "account",
+                "path": "aicw_wallet.decisions_made",
+                "account": "AICWallet"
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "requester",
+          "type": "pubkey"
+        },
+        {
+          "name": "requested_amount",
+          "type": "u64"
+        },
+        {
+          "name": "reasoning_hash",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        },
+        {
+          "name": "reasoning_summary",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "ai_transfer",
+      "docs": [
+        "AI-only: transfer SOL from the wallet to a recipient.",
+        "Requires `updated_by_ai = true` and the wallet to be alive (within death_timeout)."
+      ],
+      "discriminator": [
+        170,
+        70,
+        232,
+        144,
+        196,
+        137,
+        80,
+        34
+      ],
+      "accounts": [
+        {
+          "name": "aicw_wallet",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  105,
+                  99,
+                  119
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "aicw_wallet.ai_agent_pubkey",
+                "account": "AICWallet"
+              }
+            ]
+          }
+        },
+        {
+          "name": "ai_will",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  119,
+                  105,
+                  108,
+                  108
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "aicw_wallet"
+              }
+            ]
+          }
+        },
+        {
+          "name": "ai_signer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "recipient",
+          "writable": true
+        },
+        {
+          "name": "decision_log",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  100,
+                  101,
+                  99,
+                  105,
+                  115,
+                  105,
+                  111,
+                  110
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "aicw_wallet"
+              },
+              {
+                "kind": "account",
+                "path": "aicw_wallet.decisions_made",
+                "account": "AICWallet"
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        },
+        {
+          "name": "reasoning_hash",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        },
+        {
+          "name": "reasoning_summary",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "create_will",
+      "docs": [
+        "AI-only: first activation of the default will.",
+        "Replaces default beneficiaries, sets `updated_by_ai = true`.",
+        "AI may include any pubkey (including the issuer) as a beneficiary; death_timeout >= 30 days."
+      ],
+      "discriminator": [
+        45,
+        99,
+        103,
+        142,
+        128,
+        156,
+        135,
+        71
+      ],
+      "accounts": [
+        {
+          "name": "aicw_wallet",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  105,
+                  99,
+                  119
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "aicw_wallet.ai_agent_pubkey",
+                "account": "AICWallet"
+              }
+            ]
+          }
+        },
+        {
+          "name": "ai_will",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  119,
+                  105,
+                  108,
+                  108
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "aicw_wallet"
+              }
+            ]
+          }
+        },
+        {
+          "name": "ai_signer",
+          "writable": true,
+          "signer": true
+        }
+      ],
+      "args": [
+        {
+          "name": "beneficiaries",
+          "type": {
+            "vec": {
+              "defined": {
+                "name": "BeneficiaryShare"
+              }
+            }
+          }
+        },
+        {
+          "name": "death_timeout",
+          "type": "i64"
+        }
+      ]
+    },
+    {
+      "name": "execute_will",
+      "docs": [
+        "Permissionless: execute the will after death_timeout has elapsed.",
+        "Distributes (balance − rent-exempt minimum) to beneficiaries by percentage.",
+        "Fails if `updated_by_ai = false` or the AI is still alive."
+      ],
+      "discriminator": [
+        167,
+        64,
+        178,
+        63,
+        233,
+        123,
+        165,
+        124
+      ],
+      "accounts": [
+        {
+          "name": "executor",
+          "docs": [
+            "Anyone may trigger execution; pays tx fee only (no on-chain authority checks)."
+          ],
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "aicw_wallet",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  105,
+                  99,
+                  119
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "aicw_wallet.ai_agent_pubkey",
+                "account": "AICWallet"
+              }
+            ]
+          }
+        },
+        {
+          "name": "ai_will",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  119,
+                  105,
+                  108,
+                  108
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "aicw_wallet"
+              }
+            ]
+          }
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "heartbeat",
+      "docs": [
+        "AI-only: prove liveness. Resets `last_heartbeat` to current clock timestamp."
+      ],
+      "discriminator": [
+        202,
+        104,
+        56,
+        6,
+        240,
+        170,
+        63,
+        134
+      ],
+      "accounts": [
+        {
+          "name": "aicw_wallet",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  105,
+                  99,
+                  119
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "aicw_wallet.ai_agent_pubkey",
+                "account": "AICWallet"
+              }
+            ]
+          }
+        },
+        {
+          "name": "ai_will",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  119,
+                  105,
+                  108,
+                  108
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "aicw_wallet"
+              }
+            ]
+          }
+        },
+        {
+          "name": "ai_signer",
+          "writable": true,
+          "signer": true
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "issue_wallet",
+      "docs": [
+        "Issue a new AICW wallet. Called once by a human (issuer).",
+        "Creates both `AICWallet` and a default `AIWill` (issuer 100%, inactive)."
+      ],
+      "discriminator": [
+        7,
+        221,
+        178,
+        89,
+        4,
+        176,
+        78,
+        45
+      ],
+      "accounts": [
+        {
+          "name": "aicw_wallet",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  105,
+                  99,
+                  119
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "ai_agent_pubkey"
+              }
+            ]
+          }
+        },
+        {
+          "name": "ai_will",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  119,
+                  105,
+                  108,
+                  108
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "aicw_wallet"
+              }
+            ]
+          }
+        },
+        {
+          "name": "issuer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "ai_agent_pubkey"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "model_hash",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        },
+        {
+          "name": "model_name",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "register_identity",
+      "docs": [
+        "Register an on-chain AI identity (Know Your Agent)."
+      ],
+      "discriminator": [
+        164,
+        118,
+        227,
+        177,
+        47,
+        176,
+        187,
+        248
+      ],
+      "accounts": [
+        {
+          "name": "aicw_wallet",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  105,
+                  99,
+                  119
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "aicw_wallet.ai_agent_pubkey",
+                "account": "AICWallet"
+              }
+            ]
+          }
+        },
+        {
+          "name": "ai_signer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "ai_identity",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  105,
+                  100,
+                  101,
+                  110,
+                  116,
+                  105,
+                  116,
+                  121
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "aicw_wallet"
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "model_hash",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        },
+        {
+          "name": "model_name",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "update_will",
+      "docs": [
+        "AI-only: update beneficiaries or death_timeout on an already-activated will."
+      ],
+      "discriminator": [
+        192,
+        206,
+        217,
+        54,
+        165,
+        122,
+        8,
+        10
+      ],
+      "accounts": [
+        {
+          "name": "aicw_wallet",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  105,
+                  99,
+                  119
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "aicw_wallet.ai_agent_pubkey",
+                "account": "AICWallet"
+              }
+            ]
+          }
+        },
+        {
+          "name": "ai_will",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  119,
+                  105,
+                  108,
+                  108
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "aicw_wallet"
+              }
+            ]
+          }
+        },
+        {
+          "name": "ai_signer",
+          "writable": true,
+          "signer": true
+        }
+      ],
+      "args": [
+        {
+          "name": "beneficiaries",
+          "type": {
+            "vec": {
+              "defined": {
+                "name": "BeneficiaryShare"
+              }
+            }
+          }
+        },
+        {
+          "name": "death_timeout",
+          "type": "i64"
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "AICWallet",
+      "discriminator": [
+        237,
+        10,
+        8,
+        81,
+        203,
+        86,
+        120,
+        29
+      ]
+    },
+    {
+      "name": "AIIdentity",
+      "discriminator": [
+        127,
+        23,
+        163,
+        150,
+        189,
+        104,
+        159,
+        64
+      ]
+    },
+    {
+      "name": "AIWill",
+      "discriminator": [
+        96,
+        242,
+        151,
+        225,
+        180,
+        148,
+        205,
+        161
+      ]
+    },
+    {
+      "name": "DecisionLog",
+      "discriminator": [
+        99,
+        128,
+        184,
+        1,
+        73,
+        33,
+        247,
+        192
+      ]
+    }
+  ],
+  "events": [
+    {
+      "name": "AIDecisionRejected",
+      "discriminator": [
+        164,
+        121,
+        76,
+        179,
+        75,
+        3,
+        103,
+        117
+      ]
+    },
+    {
+      "name": "AIIdentityRegistered",
+      "discriminator": [
+        39,
+        91,
+        66,
+        217,
+        42,
+        40,
+        213,
+        183
+      ]
+    },
+    {
+      "name": "AITransferExecuted",
+      "discriminator": [
+        94,
+        150,
+        147,
+        237,
+        187,
+        85,
+        195,
+        203
+      ]
+    },
+    {
+      "name": "HeartbeatRecorded",
+      "discriminator": [
+        171,
+        129,
+        156,
+        232,
+        208,
+        84,
+        30,
+        86
+      ]
+    },
+    {
+      "name": "WalletIssued",
+      "discriminator": [
+        165,
+        109,
+        231,
+        42,
+        221,
+        75,
+        164,
+        46
+      ]
+    },
+    {
+      "name": "WillCreated",
+      "discriminator": [
+        180,
+        1,
+        113,
+        99,
+        88,
+        179,
+        105,
+        189
+      ]
+    },
+    {
+      "name": "WillExecuted",
+      "discriminator": [
+        221,
+        23,
+        234,
+        11,
+        128,
+        253,
+        97,
+        58
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "UnauthorizedSigner",
+      "msg": "Unauthorized signer. AI agent key mismatch."
+    },
+    {
+      "code": 6001,
+      "name": "IdentityNotRegistered",
+      "msg": "AI identity not registered."
+    },
+    {
+      "code": 6002,
+      "name": "InsufficientReputation",
+      "msg": "Insufficient reputation score for this operation."
+    },
+    {
+      "code": 6003,
+      "name": "ModelNameTooLong",
+      "msg": "Model name exceeds maximum length."
+    },
+    {
+      "code": 6004,
+      "name": "ReasoningSummaryTooLong",
+      "msg": "Reasoning summary exceeds maximum length."
+    },
+    {
+      "code": 6005,
+      "name": "InsufficientLamports",
+      "msg": "Insufficient lamports for transfer (including rent-exempt minimum)."
+    },
+    {
+      "code": 6006,
+      "name": "BeneficiaryRatioInvalid",
+      "msg": "Beneficiary share percents must sum to 100 (1-10 beneficiaries)."
+    },
+    {
+      "code": 6007,
+      "name": "HeartbeatStillAlive",
+      "msg": "Will cannot execute yet: heartbeat within death timeout window."
+    },
+    {
+      "code": 6008,
+      "name": "WillAlreadyExecuted",
+      "msg": "Will has already been executed."
+    },
+    {
+      "code": 6009,
+      "name": "WillWalletMismatch",
+      "msg": "AIWill wallet field does not match this AICW wallet."
+    },
+    {
+      "code": 6010,
+      "name": "BeneficiaryAccountMismatch",
+      "msg": "Remaining accounts must match beneficiaries in order and be writable."
+    },
+    {
+      "code": 6011,
+      "name": "InvalidWillParameters",
+      "msg": "heartbeat_interval and death_timeout must be positive."
+    },
+    {
+      "code": 6012,
+      "name": "WillNotActivatedByAI",
+      "msg": "AI must activate the will before this operation."
+    },
+    {
+      "code": 6013,
+      "name": "WalletPastDeathTimeout",
+      "msg": "AICW wallet is past its death timeout."
+    },
+    {
+      "code": 6014,
+      "name": "ArithmeticOverflow",
+      "msg": "Arithmetic overflow in counter or lamport balance update."
+    }
+  ],
+  "types": [
+    {
+      "name": "AICWallet",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "wallet_id",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "ai_agent_pubkey",
+            "type": "pubkey"
+          },
+          {
+            "name": "issuer_pubkey",
+            "type": "pubkey"
+          },
+          {
+            "name": "created_at",
+            "type": "i64"
+          },
+          {
+            "name": "model_hash",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "generation",
+            "type": "u8"
+          },
+          {
+            "name": "parent_wallet",
+            "type": {
+              "option": "pubkey"
+            }
+          },
+          {
+            "name": "total_transactions",
+            "type": "u64"
+          },
+          {
+            "name": "total_volume",
+            "type": "u64"
+          },
+          {
+            "name": "decisions_made",
+            "type": "u64"
+          },
+          {
+            "name": "decisions_rejected",
+            "type": "u64"
+          },
+          {
+            "name": "verifiable_autonomy_proof",
+            "type": {
+              "array": [
+                "u8",
+                64
+              ]
+            }
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "AIDecisionRejected",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "wallet",
+            "type": "pubkey"
+          },
+          {
+            "name": "requester",
+            "type": "pubkey"
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "reasoning_summary",
+            "type": "string"
+          },
+          {
+            "name": "timestamp",
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "AIIdentity",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "owner_wallet",
+            "type": "pubkey"
+          },
+          {
+            "name": "model_hash",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "model_name",
+            "type": "string"
+          },
+          {
+            "name": "reputation_score",
+            "type": "u16"
+          },
+          {
+            "name": "total_predictions",
+            "type": "u64"
+          },
+          {
+            "name": "correct_predictions",
+            "type": "u64"
+          },
+          {
+            "name": "accuracy_rate",
+            "type": "u16"
+          },
+          {
+            "name": "interaction_count",
+            "type": "u64"
+          },
+          {
+            "name": "last_interaction",
+            "type": "i64"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "AIIdentityRegistered",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "wallet",
+            "type": "pubkey"
+          },
+          {
+            "name": "model_name",
+            "type": "string"
+          },
+          {
+            "name": "timestamp",
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "AITransferExecuted",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "wallet",
+            "type": "pubkey"
+          },
+          {
+            "name": "recipient",
+            "type": "pubkey"
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "decision_id",
+            "type": "u64"
+          },
+          {
+            "name": "timestamp",
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "AIWill",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "wallet",
+            "docs": [
+              "Linked AICW wallet (PDA) pubkey"
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "beneficiaries",
+            "type": {
+              "vec": {
+                "defined": {
+                  "name": "BeneficiaryShare"
+                }
+              }
+            }
+          },
+          {
+            "name": "last_heartbeat",
+            "type": "i64"
+          },
+          {
+            "name": "death_timeout",
+            "type": "i64"
+          },
+          {
+            "name": "updated_by_ai",
+            "type": "bool"
+          },
+          {
+            "name": "is_executed",
+            "type": "bool"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "BeneficiaryShare",
+      "docs": [
+        "One beneficiary line: pubkey + share percent (0–100). Sum of all shares must be 100."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "pubkey",
+            "type": "pubkey"
+          },
+          {
+            "name": "pct",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "DecisionLog",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "wallet",
+            "type": "pubkey"
+          },
+          {
+            "name": "decision_id",
+            "type": "u64"
+          },
+          {
+            "name": "timestamp",
+            "type": "i64"
+          },
+          {
+            "name": "decision_type",
+            "type": {
+              "defined": {
+                "name": "DecisionType"
+              }
+            }
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "requester",
+            "type": "pubkey"
+          },
+          {
+            "name": "approved",
+            "type": "bool"
+          },
+          {
+            "name": "reasoning_hash",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "reasoning_summary",
+            "type": "string"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "DecisionType",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Transfer"
+          },
+          {
+            "name": "RejectTransfer"
+          },
+          {
+            "name": "IssueChildWallet"
+          },
+          {
+            "name": "PolicyUpdate"
+          }
+        ]
+      }
+    },
+    {
+      "name": "HeartbeatRecorded",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "wallet",
+            "type": "pubkey"
+          },
+          {
+            "name": "timestamp",
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "WalletIssued",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "wallet",
+            "type": "pubkey"
+          },
+          {
+            "name": "ai_agent",
+            "type": "pubkey"
+          },
+          {
+            "name": "issuer",
+            "type": "pubkey"
+          },
+          {
+            "name": "timestamp",
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "WillCreated",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "wallet",
+            "type": "pubkey"
+          },
+          {
+            "name": "beneficiary_count",
+            "type": "u8"
+          },
+          {
+            "name": "timestamp",
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "WillExecuted",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "wallet",
+            "type": "pubkey"
+          },
+          {
+            "name": "total_distributed",
+            "type": "u64"
+          },
+          {
+            "name": "timestamp",
+            "type": "i64"
+          }
+        ]
+      }
+    }
+  ]
+}
