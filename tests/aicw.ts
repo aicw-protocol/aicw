@@ -19,7 +19,7 @@ describe("AICW Tests", () => {
     crypto.createHash("sha256").update("claude-sonnet-4-20250514").digest()
   );
   const modelName = "claude-sonnet-4-20250514";
-  const DEATH_TIMEOUT_SECONDS = 600; // matches AIWill::DEATH_TIMEOUT_SECONDS (devnet)
+  const DEATH_TIMEOUT_SECONDS = 30 * 24 * 60 * 60; // matches AIWill::DEATH_TIMEOUT_SECONDS (30 days)
 
   const beneficiaryA = Keypair.generate();
   const beneficiaryB = Keypair.generate();
@@ -81,7 +81,8 @@ describe("AICW Tests", () => {
 
   const warpPastDeathTimeout = async () => {
     const currentSlot = await provider.connection.getSlot();
-    const targetSlot = currentSlot + DEATH_TIMEOUT_SECONDS * 3;
+    // ~2.5 slots/sec on local validator → advance wall-clock past death_timeout
+    const targetSlot = currentSlot + Math.ceil(DEATH_TIMEOUT_SECONDS * 2.5) + 1000;
     const result = await (provider.connection as any)._rpcRequest("warpSlot", [
       targetSlot,
     ]);

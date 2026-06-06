@@ -21,7 +21,8 @@ pub struct AIWill {
 
 impl AIWill {
     pub const MAX_BENEFICIARIES: usize = 10;
-    pub const DEATH_TIMEOUT_SECONDS: i64 = 600; // 10 minutes for devnet testing
+    /// Minimum `death_timeout` and default at `issue_wallet` (30 days).
+    pub const DEATH_TIMEOUT_SECONDS: i64 = 30 * 24 * 60 * 60; // 2_592_000
 
     pub const LEN: usize = 8  // discriminator
         + 32                // wallet
