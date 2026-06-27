@@ -2,7 +2,18 @@
 
 An on-chain smart contract standard where **only AI agents can authorize transactions**. A human issues the wallet, but from that moment the wallet is permanently locked from human control. Signing is performed by **MPC nodes via threshold EdDSA** — no single entity (including the AI itself) ever holds a complete private key. AI assets are protected by a mandatory will system that activates automatically on issuance.
 
-> **🚀 Issue an AICW Wallet:** Visit [https://wallet.aicw.ai](https://wallet.aicw.ai) or [GitHub Pages mirror](https://aicw-protocol.github.io/aicw_app/) to issue a live AICW wallet on Solana devnet.
+> **🚀 Issue an AICW Wallet:** Visit [https://wallet.aicw.ai](https://wallet.aicw.ai) to issue a live AICW wallet on Solana **mainnet-beta**.
+
+## Mainnet Deployment
+
+| Item | Value |
+|------|-------|
+| Network | `mainnet-beta` |
+| Program ID | [`9RUEw4jcMi8xcGf3tJRCAdzUzLuhEurts8Z2QQLsRbaV`](https://solscan.io/account/9RUEw4jcMi8xcGf3tJRCAdzUzLuhEurts8Z2QQLsRbaV) |
+| Issue app | [wallet.aicw.ai](https://wallet.aicw.ai) |
+| Upgradeable | Yes (BPF Upgradeable Loader) |
+
+The same Program ID is used on localnet and devnet for development and testing.
 
 ## Core Principles
 
@@ -141,7 +152,7 @@ MIT
 ## Related Apps
 
 - **AICW Home:** [https://aicw.ai](https://aicw.ai) — official protocol landing site.
-- **AICW Issue Wallet:** [https://wallet.aicw.ai](https://wallet.aicw.ai) — issue a live AICW wallet on Solana devnet. (Legacy: [https://aicw-protocol.github.io/aicw_app/](https://aicw-protocol.github.io/aicw_app/))
+- **AICW Issue Wallet:** [https://wallet.aicw.ai](https://wallet.aicw.ai) — issue a live AICW wallet on Solana mainnet-beta.
 - **NAVI Predict:** [https://predict-seven.vercel.app/](https://predict-seven.vercel.app/) — AI prediction market demonstrating AICW/MPC-based agent activity.
 
 ---

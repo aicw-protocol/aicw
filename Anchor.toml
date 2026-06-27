@@ -12,6 +12,9 @@ aicw = "9RUEw4jcMi8xcGf3tJRCAdzUzLuhEurts8Z2QQLsRbaV"
 [programs.devnet]
 aicw = "9RUEw4jcMi8xcGf3tJRCAdzUzLuhEurts8Z2QQLsRbaV"
 
+[programs.mainnet]
+aicw = "9RUEw4jcMi8xcGf3tJRCAdzUzLuhEurts8Z2QQLsRbaV"
+
 [provider]
 cluster = "localnet"
 wallet = "~/.config/solana/id.json"

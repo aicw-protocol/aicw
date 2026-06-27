@@ -72,6 +72,7 @@ coverage/
 md/
 docs/RELEASE_GOVERNANCE.md
 docs/OFFCHAIN_AGENT.md
+MAINNET_DEPLOY.md
 
 # --- Internal architecture diagrams (private infrastructure) ---
 aicw_architecture_*.svg
