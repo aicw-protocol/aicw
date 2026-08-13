@@ -145,6 +145,16 @@ Tests 6–9 require time manipulation (`warpSlot`) and are automatically skipped
 - **Framework:** Anchor (Rust)
 - **Signing:** MPC threshold EdDSA — no single point of key compromise
 
+## Local dev ports
+
+All repos share one port map: **`ports.json`** in this repo. Next.js apps run via:
+
+```bash
+node ../aicw/scripts/next-dev.mjs <service-key>
+```
+
+See also **`aicw_ecosystem.md`** for the full table (3999–4010 web apps, 8000/808x backends).
+
 ## License
 
 MIT

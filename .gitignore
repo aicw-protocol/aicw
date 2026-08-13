@@ -73,6 +73,7 @@ md/
 docs/RELEASE_GOVERNANCE.md
 docs/OFFCHAIN_AGENT.md
 MAINNET_DEPLOY.md
+AICW_Roadmap*.md
 
 # --- Internal architecture diagrams (private infrastructure) ---
 aicw_architecture_*.svg

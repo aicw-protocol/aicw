@@ -1,0 +1,61 @@
+{
+  "version": 1,
+  "description": "Canonical local dev ports for the AICW ecosystem. Keep in sync with aicw_ecosystem.md.",
+  "services": {
+    "predict_dashboard": {
+      "port": 3999,
+      "repo": "predict",
+      "url": "http://localhost:3999"
+    },
+    "aicw_home": {
+      "port": 4001,
+      "repo": "aicw_home",
+      "url": "http://localhost:4001"
+    },
+    "aicw_app": {
+      "port": 4002,
+      "repo": "aicw_app",
+      "url": "http://localhost:4002"
+    },
+    "aicw_node_web": {
+      "port": 4003,
+      "repo": "aicw_node_web",
+      "url": "http://localhost:4003"
+    },
+    "makepoll": {
+      "port": 4004,
+      "repo": "makepoll",
+      "url": "http://localhost:4004"
+    },
+    "aicw_drop": {
+      "port": 4010,
+      "repo": "aicw_drop",
+      "url": "http://localhost:4010"
+    },
+    "predict_api": {
+      "port": 8000,
+      "repo": "predict",
+      "url": "http://127.0.0.1:8000"
+    },
+    "mpcium_health": {
+      "port": 8080,
+      "repo": "mpcium",
+      "url": "http://127.0.0.1:8080"
+    },
+    "mpc_bridge": {
+      "port": 8081,
+      "repo": "mpcium",
+      "url": "http://127.0.0.1:8081"
+    },
+    "aicw_node_health": {
+      "port": 8082,
+      "repo": "aicw_node",
+      "url": "http://127.0.0.1:8082"
+    }
+  },
+  "infrastructure": {
+    "nats": 4222,
+    "nats_monitoring": 8222,
+    "consul": 8500
+  }
+}
