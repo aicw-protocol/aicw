@@ -52,3 +52,11 @@ pub struct HeartbeatRecorded {
     pub wallet: Pubkey,
     pub timestamp: i64,
 }
+
+#[event]
+pub struct WalletClosed {
+    pub wallet: Pubkey,
+    pub issuer: Pubkey,
+    pub ai_agent: Pubkey,
+    pub timestamp: i64,
+}

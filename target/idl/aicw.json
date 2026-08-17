@@ -254,6 +254,77 @@
       ]
     },
     {
+      "name": "close_wallet",
+      "docs": [
+        "AI-only: close an unused wallet; reclaims AICWallet + AIWill rent to the issuer."
+      ],
+      "discriminator": [
+        35,
+        212,
+        234,
+        224,
+        244,
+        208,
+        31,
+        204
+      ],
+      "accounts": [
+        {
+          "name": "aicw_wallet",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  105,
+                  99,
+                  119
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "aicw_wallet.ai_agent_pubkey",
+                "account": "AICWallet"
+              }
+            ]
+          }
+        },
+        {
+          "name": "ai_will",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  119,
+                  105,
+                  108,
+                  108
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "aicw_wallet"
+              }
+            ]
+          }
+        },
+        {
+          "name": "ai_signer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "rent_recipient",
+          "writable": true
+        }
+      ],
+      "args": []
+    },
+    {
       "name": "create_will",
       "docs": [
         "AI-only: first activation of the default will.",
@@ -843,6 +914,19 @@
       ]
     },
     {
+      "name": "WalletClosed",
+      "discriminator": [
+        163,
+        73,
+        132,
+        31,
+        180,
+        152,
+        98,
+        48
+      ]
+    },
+    {
       "name": "WalletIssued",
       "discriminator": [
         165,
@@ -957,6 +1041,16 @@
       "code": 6014,
       "name": "ArithmeticOverflow",
       "msg": "Arithmetic overflow in counter or lamport balance update."
+    },
+    {
+      "code": 6015,
+      "name": "CloseRecipientMismatch",
+      "msg": "Close recipient must be the wallet issuer."
+    },
+    {
+      "code": 6016,
+      "name": "WalletHasOnChainActivity",
+      "msg": "Wallet cannot be closed after transfer or reject activity."
     }
   ],
   "types": [
@@ -1314,6 +1408,30 @@
         "fields": [
           {
             "name": "wallet",
+            "type": "pubkey"
+          },
+          {
+            "name": "timestamp",
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "WalletClosed",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "wallet",
+            "type": "pubkey"
+          },
+          {
+            "name": "issuer",
+            "type": "pubkey"
+          },
+          {
+            "name": "ai_agent",
             "type": "pubkey"
           },
           {

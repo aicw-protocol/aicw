@@ -46,4 +46,10 @@ pub enum AICWError {
 
     #[msg("Arithmetic overflow in counter or lamport balance update.")]
     ArithmeticOverflow,
+
+    #[msg("Close recipient must be the wallet issuer.")]
+    CloseRecipientMismatch,
+
+    #[msg("Wallet cannot be closed after transfer or reject activity.")]
+    WalletHasOnChainActivity,
 }

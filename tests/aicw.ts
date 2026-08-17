@@ -130,6 +130,63 @@ describe("AICW Tests", () => {
     assert.isFalse(will.isExecuted);
   });
 
+  it("1h. close_wallet reclaims rent to issuer when unused", async () => {
+    const closeHuman = Keypair.generate();
+    const closeAI = Keypair.generate();
+
+    for (const kp of [closeHuman, closeAI]) {
+      const sig = await provider.connection.requestAirdrop(
+        kp.publicKey,
+        2 * LAMPORTS_PER_SOL
+      );
+      await provider.connection.confirmTransaction(sig);
+    }
+
+    const [closeWalletPda] = anchor.web3.PublicKey.findProgramAddressSync(
+      [Buffer.from("aicw"), closeAI.publicKey.toBuffer()],
+      program.programId
+    );
+    const [closeWillPda] = anchor.web3.PublicKey.findProgramAddressSync(
+      [Buffer.from("will"), closeWalletPda.toBuffer()],
+      program.programId
+    );
+
+    await program.methods
+      .issueWallet(modelHash, modelName)
+      .accounts({
+        aicwWallet: closeWalletPda,
+        aiWill: closeWillPda,
+        issuer: closeHuman.publicKey,
+        aiAgentPubkey: closeAI.publicKey,
+        systemProgram: SystemProgram.programId,
+      })
+      .signers([closeHuman])
+      .rpc();
+
+    const issuerBefore = await provider.connection.getBalance(closeHuman.publicKey);
+
+    await program.methods
+      .closeWallet()
+      .accounts({
+        aicwWallet: closeWalletPda,
+        aiWill: closeWillPda,
+        aiSigner: closeAI.publicKey,
+        rentRecipient: closeHuman.publicKey,
+      })
+      .signers([closeAI])
+      .rpc();
+
+    const issuerAfter = await provider.connection.getBalance(closeHuman.publicKey);
+    assert.isAbove(issuerAfter, issuerBefore, "issuer should receive reclaimed rent");
+
+    try {
+      await program.account.aicWallet.fetch(closeWalletPda);
+      assert.fail("wallet account must be closed");
+    } catch (e: any) {
+      assert.include(e.toString(), "Account does not exist");
+    }
+  });
+
   it("1a. default will is not executable before AI activation", async () => {
     try {
       await program.methods
