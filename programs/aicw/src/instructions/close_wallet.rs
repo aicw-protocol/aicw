@@ -4,8 +4,8 @@ use crate::errors::AICWError;
 use crate::events::WalletClosed;
 use crate::state::{AICWallet, AIWill};
 
-/// AI-only: close an unused wallet and return AICWallet + AIWill rent to the issuer.
-/// Allowed only when the wallet has no on-chain transfer/reject activity.
+/// AI-only: close the wallet and return AICWallet + AIWill lamports (rent and any
+/// remaining balance) to the original issuer. Prior on-chain activity does not block close.
 #[derive(Accounts)]
 pub struct CloseWallet<'info> {
     #[account(
@@ -31,7 +31,7 @@ pub struct CloseWallet<'info> {
     )]
     pub ai_signer: Signer<'info>,
 
-    /// CHECK: must be the original issuer; receives reclaimed rent from both PDAs.
+    /// CHECK: must be the original issuer; receives lamports from both closed PDAs.
     #[account(
         mut,
         constraint = rent_recipient.key() == aicw_wallet.issuer_pubkey @ AICWError::CloseRecipientMismatch,
@@ -41,11 +41,6 @@ pub struct CloseWallet<'info> {
 
 pub fn close_wallet(ctx: Context<CloseWallet>) -> Result<()> {
     let wallet = &ctx.accounts.aicw_wallet;
-    let will = &ctx.accounts.ai_will;
-
-    require!(wallet.total_transactions == 0, AICWError::WalletHasOnChainActivity);
-    require!(wallet.decisions_made == 0, AICWError::WalletHasOnChainActivity);
-    require!(!will.is_executed, AICWError::WillAlreadyExecuted);
 
     emit!(WalletClosed {
         wallet: wallet.key(),

@@ -93,7 +93,7 @@ pub mod aicw {
         instructions::ai_will::execute_will(ctx)
     }
 
-    /// AI-only: close an unused wallet; reclaims AICWallet + AIWill rent to the issuer.
+    /// AI-only: close the wallet; reclaims AICWallet + AIWill lamports to the issuer.
     pub fn close_wallet(ctx: Context<CloseWallet>) -> Result<()> {
         instructions::close_wallet::close_wallet(ctx)
     }

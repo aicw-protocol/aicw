@@ -49,7 +49,4 @@ pub enum AICWError {
 
     #[msg("Close recipient must be the wallet issuer.")]
     CloseRecipientMismatch,
-
-    #[msg("Wallet cannot be closed after transfer or reject activity.")]
-    WalletHasOnChainActivity,
 }
