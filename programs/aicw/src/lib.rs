@@ -7,7 +7,7 @@ pub mod state;
 
 use instructions::*;
 
-declare_id!("9RUEw4jcMi8xcGf3tJRCAdzUzLuhEurts8Z2QQLsRbaV");
+declare_id!("FcWqrRLcAxwqAhMSGXabD8zEKqnPHsovBvcmLaH9hsVv");
 
 #[program]
 pub mod aicw {

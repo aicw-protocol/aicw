@@ -7,13 +7,13 @@ resolution = true
 skip-lint = false
 
 [programs.localnet]
-aicw = "9RUEw4jcMi8xcGf3tJRCAdzUzLuhEurts8Z2QQLsRbaV"
+aicw = "FcWqrRLcAxwqAhMSGXabD8zEKqnPHsovBvcmLaH9hsVv"
 
 [programs.devnet]
-aicw = "9RUEw4jcMi8xcGf3tJRCAdzUzLuhEurts8Z2QQLsRbaV"
+aicw = "FcWqrRLcAxwqAhMSGXabD8zEKqnPHsovBvcmLaH9hsVv"
 
 [programs.mainnet]
-aicw = "9RUEw4jcMi8xcGf3tJRCAdzUzLuhEurts8Z2QQLsRbaV"
+aicw = "FcWqrRLcAxwqAhMSGXabD8zEKqnPHsovBvcmLaH9hsVv"
 
 [provider]
 cluster = "localnet"
